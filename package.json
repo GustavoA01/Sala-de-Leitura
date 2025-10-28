@@ -1,7 +1,10 @@
 {
   "name": "sala-de-leitura",
   "version": "1.0.0",
-  "main": "index.ts",
+  "overrides": {
+    "react-dom": "19.1.0"
+  },
+  "main": "expo-router/entry",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -9,13 +12,29 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@react-native-vector-icons/material-design-icons": "^12.3.0",
     "expo": "~54.0.20",
+    "expo-constants": "~18.0.10",
+    "expo-linking": "~8.0.8",
+    "expo-router": "~6.0.13",
     "expo-status-bar": "~3.0.8",
     "react": "19.1.0",
-    "react-native": "0.81.5"
+    "react-hook-form": "^7.65.0",
+    "react-native": "0.81.5",
+    "react-native-gesture-handler": "~2.28.0",
+    "react-native-paper": "^5.14.5",
+    "react-native-raw-bottom-sheet": "^3.0.0",
+    "react-native-safe-area-context": "~5.6.0",
+    "react-native-screens": "~4.16.0",
+    "zod": "^3.25.76"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@react-native-community/cli": "latest",
     "@types/react": "~19.1.0",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "babel-preset-expo": "^54.0.6",
     "typescript": "~5.9.2"
   },
   "private": true
