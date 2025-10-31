@@ -1,4 +1,4 @@
-export type BookType = {
+export interface BookType {
   id: string
   title: string
   author: string | undefined
@@ -10,3 +10,5 @@ export type BookType = {
   startDate: string | undefined
   endDate: string | undefined
 }
+
+export type BookFormType = Omit<BookType, "id" | "status" | "addedIn">

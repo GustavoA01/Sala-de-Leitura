@@ -9,7 +9,9 @@ import { filtersLabel } from "@/data/constants"
 import { AddSortContainer } from "../Filters/container/AddSortContainer"
 
 export const HomeFilters = () => {
-  const [selectedFilter, setSelectedFilter] = useState<number | undefined>(0)
+  const [selectedFilter, setSelectedFilter] = useState<number | undefined>(
+    undefined
+  )
   const { control } = useForm()
 
   const handleFilter = (filter: number | undefined) => {

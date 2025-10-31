@@ -21,9 +21,9 @@ export const filtersLabel = [
 ]
 
 export const statusLabel = [
-  { label: "Lendo", color: theme.colors.secondary },
-  { label: "Para ler", color: theme.colors.error },
-  { label: "Lido", color: theme.colors.primary },
+  { label: "Lendo", color: theme.colors.secondary, value: 0 },
+  { label: "Para ler", color: theme.colors.error, value: 1 },
+  { label: "Lido", color: theme.colors.primary, value: 2 },
 ]
 
 export const sortItems = [
@@ -72,7 +72,7 @@ export const mockData: BookType[] = [
   },
   {
     id: "3",
-    title: "As crônicas de Nárnia o leão, a feiticeira e o guarda-roupa",
+    title: "As Crônicas de Nárnia: o Leão, a Feiticeira e o Guarda-roupa.",
     description: "A família Pevensie encontra um mundo mágico através de um guarda-roupa. Eles se tornam príncipes e rainhas e enfrentam o mal do Rei Caspian.",
     rating: 10,
     author: "C.S. Lewis",
