@@ -1,50 +1,54 @@
 import SafeAreaWrapper from "@/components/ui/SafeAreaWrapper"
 import { useLocalSearchParams } from "expo-router"
 import { StackHeader } from "@/components/StackHeader"
-import { InputTitleAuthor } from "@/features/form/components/InputTitleAuthor"
-import { FormProvider, useForm } from "react-hook-form"
-import { ScrollView } from "react-native-gesture-handler"
+import { FormProvider } from "react-hook-form"
 import { View } from "react-native"
-import { InputCategoryStatus } from "@/features/form/components/InputCategoryStatus"
-import { statusLabel } from "@/data/constants"
-import { useState } from "react"
-import { InputDates } from "@/features/form/components/InputDates"
-import { BookFormType } from "@/data/types"
-
+import { FormFooter } from "@/features/form/components/FormFooter"
+import { router } from "expo-router"
+import { useBookForm } from "@/hooks/useBookForm"
+import { Form } from "@/features/form/container/Form"
 
 const BookFormScreen = () => {
   const { id } = useLocalSearchParams()
   const isEditing = !!id
-
-  const [selectedStatus, setSelectedStatus] = useState<number>(0)
-  const [label, setLabel] = useState<string>(statusLabel[selectedStatus].label)
-
-  const methods = useForm<BookFormType>({
-    defaultValues: {
-      title: "",
-      author: "",
-      description: "",
-      rating: 0,
-    },
-  })
+  const {
+    selectedStatus,
+    setSelectedStatus,
+    label,
+    setLabel,
+    startDate,
+    endDate,
+    handleStartDateChange,
+    handleEndDateChange,
+    methods,
+    handleSubmit,
+    isValid,
+    onSubmit,
+  } = useBookForm()
 
   return (
     <SafeAreaWrapper>
       <StackHeader title={isEditing ? "Editar Livro" : "Adicionar Livro"} />
-      <View style={{ paddingHorizontal: 16 }}>
+      <View style={{ flex: 1, paddingHorizontal: 16 }}>
         <FormProvider {...methods}>
-          <ScrollView>
-            <InputTitleAuthor />
-            <InputCategoryStatus
-              selectedStatus={selectedStatus}
-              setSelectedStatus={setSelectedStatus}
-              label={label}
-              setLabel={setLabel}
-            />
-            <InputDates />
-          </ScrollView>
+          <Form
+            selectedStatus={selectedStatus}
+            setSelectedStatus={setSelectedStatus}
+            label={label}
+            setLabel={setLabel}
+            startDate={startDate}
+            endDate={endDate}
+            handleStartDateChange={handleStartDateChange}
+            handleEndDateChange={handleEndDateChange}
+          />
         </FormProvider>
       </View>
+      <FormFooter
+        // @ts-ignore
+        onSave={handleSubmit(onSubmit)}
+        onCancel={() => router.back()}
+        isValid={isValid}
+      />
     </SafeAreaWrapper>
   )
 }

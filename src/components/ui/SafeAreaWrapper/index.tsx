@@ -1,24 +1,16 @@
 import React from "react"
-import { StyleProp, ViewStyle } from "react-native"
-import { useTheme } from "react-native-paper"
-import { SafeAreaView } from "react-native-safe-area-context"
+import { SafeAreaView, SafeAreaViewProps } from "react-native-safe-area-context"
 import { styles } from "./styles"
 
-export default function SafeAreaWrapper({
-  children,
-  style,
-}: {
+type SafeAreaWrapperProps = SafeAreaViewProps & {
   children: React.ReactNode
-  style?: StyleProp<ViewStyle>
-}) {
-  const theme = useTheme()
+}
 
+export default function SafeAreaWrapper({ children, ...props }: SafeAreaWrapperProps) {
   return (
     <SafeAreaView
-      style={{
-        ...styles.safeArea,
-        ...(style as object),
-      }}
+      style={styles.safeArea}
+      {...props}
     >
       {children}
     </SafeAreaView>

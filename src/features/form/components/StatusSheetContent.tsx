@@ -22,7 +22,7 @@ export const StatusSheetContent = ({
       <View>
         {statusLabel.map((status) => {
           return (
-            <TouchableOpacity onPress={() => handleSelectStatus(status.value)}>
+            <TouchableOpacity key={status.value} onPress={() => handleSelectStatus(status.value)}>
               <List.Item
                 title={status.label}
                 titleStyle={{ fontSize: 18 }}

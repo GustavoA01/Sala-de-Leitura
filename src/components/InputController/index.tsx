@@ -17,6 +17,7 @@ export const InputController = <FormType extends FieldValues>({
   ...inputProps
 }: InputControllerProps<FormType>) => {
   const { control } = useFormContext()
+  
   return (
     <Controller
       control={control}

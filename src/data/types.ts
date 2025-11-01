@@ -1,14 +1,12 @@
 export interface BookType {
   id: string
   title: string
-  author: string | undefined
+  author?: string
   status: number
-  description: string | undefined
-  rating: number | undefined
-  category: string | undefined
+  description?: string
+  rating?: number
+  category?: string
   addedIn: string
-  startDate: string | undefined
-  endDate: string | undefined
+  startDate?: string
+  endDate?: string
 }
-
-export type BookFormType = Omit<BookType, "id" | "status" | "addedIn">

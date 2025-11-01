@@ -1,11 +1,11 @@
-import { InputController } from "@/components/Controller"
+import { InputController } from "@/components/InputController"
 import { CustomBottomSheet } from "@/components/ui/CustomBottomSheet"
 import { FormCardContainer } from "@/components/ui/FormCardContainer"
 import { StatusSheetContent } from "./StatusSheetContent"
 import { useRef } from "react"
 import { Button } from "react-native-paper"
 import { statusLabel } from "@/data/constants"
-import { BookFormType } from "@/data/types"
+import { BookFormType } from "@/data/schemas"
 
 type InputCategoryStatusProps = {
   selectedStatus: number
@@ -30,7 +30,10 @@ export const InputCategoryStatus = ({
   }
 
   return (
-    <FormCardContainer iconName="progress-check" title="Categoria e Status">
+    <FormCardContainer
+      iconName="progress-check"
+      title="Classificação e Progresso"
+    >
       <InputController<BookFormType> name="category" label="Categoria" />
       <Button
         mode="outlined"
