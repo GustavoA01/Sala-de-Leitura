@@ -3,6 +3,7 @@ import { View } from "react-native"
 import { Divider, List, Text } from "react-native-paper"
 import { styles } from "../container/styles"
 import { BookType } from "@/data/types"
+import { format } from "date-fns"
 
 type BookInfoProps = Pick<
   BookType,

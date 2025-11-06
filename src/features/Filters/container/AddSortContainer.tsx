@@ -9,20 +9,21 @@ import { sortItems } from "@/data/constants"
 
 type AddSortContainerProps = {
   onPressAddButton: () => void
+  selectedSort: string
+  onSelectSort: (value: string) => void
 }
 
 export const AddSortContainer = ({
   onPressAddButton,
+  selectedSort,
+  onSelectSort,
 }: AddSortContainerProps) => {
-  const [selectedSort, setSelectedSort] = useState<string>("")
-
   const bottomSheetRef = useRef<any>(null)
   const onOpenBottomSheet = () => bottomSheetRef.current?.open()
 
   const handleSelectSort = (value: string) => {
-    setSelectedSort(value)
     bottomSheetRef.current?.close()
-    console.log(value)
+    onSelectSort(value)
   }
 
   return (
@@ -36,7 +37,7 @@ export const AddSortContainer = ({
         />
       </View>
 
-      <CustomBottomSheet bottomSheetRef={bottomSheetRef}>
+      <CustomBottomSheet height={400} bottomSheetRef={bottomSheetRef}>
         <FilterSheetContent
           selectedSort={selectedSort}
           handleSelectSort={handleSelectSort}

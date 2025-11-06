@@ -42,15 +42,18 @@ export const useBookForm = () => {
     }
 
     const newBook: Omit<BookType, "id" | "addedIn"> = {
-      ...data,
+      title: data.title,
+      author: data.author ?? '',
+      description: data.description ?? '',
+      category: data.category ?? '',
+      rating: data.rating ?? null,
       status: selectedStatus,
-      startDate: startDate ? startDate.toISOString() : undefined,
-      endDate: endDate ? endDate.toISOString() : undefined,
+      startDate: startDate ? startDate.toISOString() : null,
+      endDate: endDate ? endDate.toISOString() : null,
     }
 
     console.log(newBook)
   }
-
 
   return {
     selectedStatus,

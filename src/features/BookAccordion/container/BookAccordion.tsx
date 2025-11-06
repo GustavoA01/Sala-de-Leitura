@@ -8,6 +8,7 @@ import { RightAccordion } from "../components/RightAccordion"
 import { BookEditOptions } from "../components/BookEditOptions"
 import { BookType } from "@/data/types"
 import { router, usePathname } from "expo-router"
+import { format } from "date-fns"
 
 export const BookAccordion = ({
   id,
@@ -57,9 +58,9 @@ export const BookAccordion = ({
         right={() => (rating ? <RightAccordion rating={rating} /> : null)}
       >
         <BookInfo
-          addedIn={addedIn}
-          startDate={startDate ?? "-"}
-          endDate={endDate ?? "-"}
+          addedIn={addedIn ? format(new Date(addedIn), "dd/MM/yyyy") : "-"}
+          startDate={startDate ? format(new Date(startDate), "dd/MM/yyyy") : "-"}
+          endDate={endDate ? format(new Date(endDate), "dd/MM/yyyy") : "-"}
           category={category ?? "-"}
           description={description ?? ""}
         />

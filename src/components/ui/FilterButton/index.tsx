@@ -20,7 +20,6 @@ export const FilterButton = ({ sortByItems, selectedSort, onPress }: Props) => {
         <Icon
           source="tune-vertical"
           size={props.size}
-          color={theme.colors.onSurface}
         />
       )}
     >

@@ -29,7 +29,6 @@ export const styles = StyleSheet.create({
   },
 
   bookInfoContainer: {
-    backgroundColor: theme.colors.surfaceVariant,
     padding: 16,
     borderBottomLeftRadius: 12,
     borderBottomRightRadius: 12,

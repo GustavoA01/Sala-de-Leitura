@@ -4,9 +4,11 @@ export interface BookType {
   author?: string
   status: number
   description?: string
-  rating?: number
+  rating?: number | null
   category?: string
   addedIn: string
-  startDate?: string
-  endDate?: string
+  startDate?: string | null
+  endDate?: string | null
 }
+
+// TODO: trocar datas para Timestamp 

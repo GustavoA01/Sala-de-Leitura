@@ -1,8 +1,10 @@
 import { View } from "react-native"
 import { styles } from "./styles"
-import { IconButton, Text } from "react-native-paper"
+import { Button, IconButton, Text } from "react-native-paper"
 import { theme } from "../../theme"
 import { usePathname } from "expo-router"
+import { useRef } from "react"
+import { CustomBottomSheet } from "../ui/CustomBottomSheet"
 
 const pathsTitle = {
   "/": "Meus Livros",
@@ -12,6 +14,9 @@ const pathsTitle = {
 
 export const Header = () => {
   const pathname = usePathname()
+  const bottomSheetRef = useRef<any>(null)
+
+  const onOpenBottomSheet = () => bottomSheetRef.current?.open()
 
   return (
     <View style={styles.container}>
@@ -23,8 +28,23 @@ export const Header = () => {
         size={24}
         iconColor={theme.colors.onBackground}
         style={styles.accountButton}
-        onPress={() => {}}
+        onPress={onOpenBottomSheet}
       />
+
+      <CustomBottomSheet bottomSheetRef={bottomSheetRef} height={200}>
+        <View style={styles.settingsContainer}>
+          <Text variant="headlineSmall" style={styles.settingsTitle}>
+            Configurações da conta
+          </Text>
+          <Button
+            textColor={theme.colors.error}
+            mode="outlined"
+            onPress={() => {}}
+          >
+            Sair
+          </Button>
+        </View>
+      </CustomBottomSheet>
     </View>
   )
 }

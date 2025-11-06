@@ -12,11 +12,18 @@ export const HomeFilters = () => {
   const [selectedFilter, setSelectedFilter] = useState<number | undefined>(
     undefined
   )
+  const [selectedSort, setSelectedSort] = useState<string>("")
+
   const { control } = useForm()
 
   const handleFilter = (filter: number | undefined) => {
     setSelectedFilter(filter)
     console.log(filter)
+  }
+
+  const handleSelectSort = (value: string) => {
+    setSelectedSort(value)
+    console.log(value)
   }
 
   const handleSearch = (value: string) => {
@@ -41,7 +48,11 @@ export const HomeFilters = () => {
       </View>
 
       <SearchController control={control} handleSearch={handleSearch} />
-      <AddSortContainer onPressAddButton={() => router.push("/book-form")} />
+      <AddSortContainer
+        onPressAddButton={() => router.push("/book-form")}
+        selectedSort={selectedSort}
+        onSelectSort={handleSelectSort}
+      />
     </View>
   )
 }

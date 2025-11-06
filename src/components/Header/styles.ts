@@ -21,4 +21,16 @@ export const styles = StyleSheet.create({
     borderRadius: 100,
     padding: 8,
   },
+
+  settingsContainer: {
+    padding: 16,
+    flex: 1,
+    justifyContent:'space-between',
+    marginBottom: 16,
+  },
+
+  settingsTitle: {
+    color: theme.colors.onBackground,
+  },
+  
 })

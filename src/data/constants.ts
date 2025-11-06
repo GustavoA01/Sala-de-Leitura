@@ -36,6 +36,10 @@ export const sortItems = [
     value: "author",
   },
   {
+    label: "Avaliação",
+    value: "rating",
+  },
+  {
     label: "Adicionados recentemente",
     value: "addedRecently",
   },

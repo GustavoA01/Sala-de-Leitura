@@ -28,7 +28,7 @@ const BookFormScreen = () => {
 
   return (
     <SafeAreaWrapper>
-      <StackHeader title={isEditing ? "Editar Livro" : "Adicionar Livro"} />
+      <StackHeader title={isEditing ? "Editar livro" : "Adicionar livro"} />
       <View style={{ flex: 1, paddingHorizontal: 16 }}>
         <FormProvider {...methods}>
           <Form
