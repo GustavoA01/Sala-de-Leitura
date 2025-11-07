@@ -18,6 +18,12 @@ const LoginScreen = () => {
   //   }, 2000)
   // }, [])
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     router.push('/details/1')
+  //   }, 2000)
+  // }, [])
+
   return (
     <SafeAreaWrapper>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
