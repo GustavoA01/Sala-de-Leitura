@@ -20,7 +20,7 @@ const RootLayout = () => {
           <Stack.Screen name="sign-up" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="book-form" />
-          <Stack.Screen name="[details]" />
+          <Stack.Screen name="details/[id]" />
         </Stack>
         <StatusBar
           barStyle="light-content"
