@@ -11,16 +11,19 @@ import { Button, Text, TextInput } from 'react-native-paper'
 
 const LoginScreen = () => {
   const router = useRouter();
-  const form = useForm();
+  const form = useForm({defaultValues: {
+    "email": "",
+    "senha": "",
+  }});
   const onSubmit = (data: any) => console.log(data);
   const [secureTextEntry, setSecureTextEntry] = useState(true);
 
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     router.push('/(tabs)')
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    setTimeout(() => {
+      router.push('/(tabs)')
+    }, 2000)
+  }, [])
   
   // useEffect(() => {
   //   setTimeout(() => {
@@ -39,7 +42,7 @@ const LoginScreen = () => {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={styleSheet.text}>Sala de{'\n'}Leitura</Text>
       <FormProvider {...form}>
-            <InputController placeholder="Email" style={styleSheet.textInput} {...form.register("name")}/>
+            <InputController placeholder="Email" style={styleSheet.textInput} {...form.register("email")}/>
             <InputController secureTextEntry={secureTextEntry} placeholder="Senha" style={styleSheet.textInput} {...form.register("senha")}
                     right={
                       <TextInput.Icon
@@ -48,7 +51,7 @@ const LoginScreen = () => {
                       />
                     }
             />
-            <CustomButton width="80%" fontSize={20} title="Entrar" onPress={onSubmit}/>
+            <CustomButton width="80%" fontSize={20} title="Entrar" onPress={form.handleSubmit(onSubmit)}/>
             <Button onPress={() => router.navigate('/sign-up')}>
               <Text>Não tem uma conta? </Text>Cadastre-se
             </Button>

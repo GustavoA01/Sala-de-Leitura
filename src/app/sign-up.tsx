@@ -8,17 +8,14 @@ import { CustomButton } from "@/components/Button"
 import { router } from "expo-router"
 
 const SignUpScreen = () => {
-  const form = useForm();
+  const form = useForm({defaultValues: {
+    "name": "",
+    "email": "",
+    "senha": "",
+  }});
   
   const onSubmit = (data: any) => {
-    Alert.alert('Alert Title', 'My Alert Msg', [
-      {
-        text: data[1],
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {text: 'OK', onPress: () => console.log('OK Pressed')},
-    ]);
+    console.log(data)
   }
 
   return (
