@@ -22,6 +22,7 @@ export const theme: MD3Theme = {
     onSurfaceVariant: "#A1A1AA",
     outline: "#3F3F46",
     outlineVariant: "#27272A",
+    tertiary: "#FFD700",
 
     error: "#EF4444",
     onError: "#ffffff",

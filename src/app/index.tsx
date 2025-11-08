@@ -7,12 +7,13 @@ import { View } from "react-native"
 import { Text } from "react-native-paper"
 
 const LoginScreen = () => {
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     router.push('/(tabs)')
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    setTimeout(() => {
+      router.push('/(tabs)')
+    }, 2000)
+  }, [])
 
+  
   // useEffect(() => {
   //   setTimeout(() => {
   //     router.push('/sign-up')

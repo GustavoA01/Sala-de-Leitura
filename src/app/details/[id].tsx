@@ -1,21 +1,19 @@
-import { Header } from "@/components/Header"
 import { StackHeader } from "@/components/StackHeader"
 import SafeAreaWrapper from "@/components/ui/SafeAreaWrapper"
-import { Text } from "react-native-paper"
 import { useLocalSearchParams } from "expo-router"
-import { View } from "react-native"
+import { booksMock } from "@/data/constants"
+import { BookDetails } from "@/features/details/container/BookDetails"
 
 const DetailsScreen = () => {
   const { id } = useLocalSearchParams()
   console.log(id)
 
+  const book = booksMock.find((b) => b.id === id) || booksMock[0]
+
   return (
     <SafeAreaWrapper>
       <StackHeader title="Detalhes" />
-      <View style={{paddingHorizontal: 16}}>
-      <Text>Detalhes</Text>
-
-      </View>
+      <BookDetails book={book} />
     </SafeAreaWrapper>
   )
 }
