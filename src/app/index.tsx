@@ -6,11 +6,17 @@ import { Text } from 'react-native-paper'
 
 const LoginScreen = () => {
 
-  useEffect(() => {
-    setTimeout(() => {
-      router.push('/(tabs)')
-    }, 2000)
-  }, [])
+  //  useEffect(() => {
+  //   setTimeout(() => {
+  //     router.push('/(tabs)')
+  //   }, 2000)
+  // }, [])
+
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     router.push('/(tabs)')
+  //   }, 2000)
+  // }, [])
   
   // useEffect(() => {
   //   setTimeout(() => {
@@ -18,11 +24,11 @@ const LoginScreen = () => {
   //   }, 2000)
   // }, [])
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     router.push('/details/1')
-  //   }, 2000)
-  // }, [])
+  useEffect(() => {
+    setTimeout(() => {
+      router.push('/details/1')
+    }, 2000)
+  }, [])
 
   return (
     <SafeAreaWrapper>
