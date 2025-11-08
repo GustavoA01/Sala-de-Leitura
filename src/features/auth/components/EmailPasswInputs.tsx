@@ -1,21 +1,42 @@
 import { InputController } from "@/components/InputController"
-import { TextInput } from "react-native-paper"
+import { FieldValues, Path, useFormContext } from "react-hook-form"
+import { HelperText, TextInput } from "react-native-paper"
 
-type EmailPasswInputsProps = {
+type MinimumAuthProps = {
+  email: string
+  password: string
+}
+
+type EmailPasswInputsProps<FormType extends FieldValues & MinimumAuthProps> = {
   secureTextEntry: boolean
   setSecureTextEntry: (value: boolean) => void
 }
 
-export const EmailPasswInputs = ({
+export const EmailPasswInputs = <
+  FormType extends FieldValues & MinimumAuthProps
+>({
   secureTextEntry,
   setSecureTextEntry,
-}: EmailPasswInputsProps) => {
+}: EmailPasswInputsProps<FormType>) => {
+  const {
+    formState: { errors },
+  } = useFormContext<FormType>()
   return (
     <>
-      <InputController label="Email" name="email" style={{ width: "100%" }} />
-      <InputController
+      <InputController<FormType>
+        label="Email"
+        name={"email" as Path<FormType>}
+        style={{ width: "100%" }}
+        keyboardType="email-address"
+      />
+      {errors.email && (
+        <HelperText style={{ alignSelf: "flex-start" }} type="error">
+          {errors.email.message as string}
+        </HelperText>
+      )}
+      <InputController<FormType>
         label="Senha"
-        name="senha"
+        name={"password" as Path<FormType>}
         style={{ width: "100%" }}
         secureTextEntry={secureTextEntry}
         right={
@@ -25,6 +46,11 @@ export const EmailPasswInputs = ({
           />
         }
       />
+      {errors.password && (
+        <HelperText style={{ alignSelf: "flex-start" }} type="error">
+          {errors.password.message as string}
+        </HelperText>
+      )}
     </>
   )
 }
