@@ -22,7 +22,7 @@ const LoginScreen = () => {
 
   // useEffect(() => {
   //   setTimeout(() => {
-  //     router.push('/details/1')
+  //     router.push('/details/5')
   //   }, 2000)
   // }, [])
 

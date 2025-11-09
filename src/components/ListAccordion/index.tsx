@@ -15,6 +15,8 @@ export const ListAccordion = ({data}: {data: BookType[]}) => {
       />
       <FlatList
         data={data}
+        keyExtractor={(item) => item.id}
+        showsVerticalScrollIndicator={false}
         renderItem={({ item }) => (
           <BookAccordion
             id={item.id}
@@ -29,7 +31,6 @@ export const ListAccordion = ({data}: {data: BookType[]}) => {
             endDate={item.endDate}
           />
         )}
-        keyExtractor={(item) => item.id}
       />
     </List.AccordionGroup>
   )

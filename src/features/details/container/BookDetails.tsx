@@ -5,6 +5,8 @@ import { Divider, Text } from "react-native-paper"
 import { DetailsHeader } from "../components/DetailsHeader"
 import { DetailsInfo } from "../components/DetailsInfo"
 import { DetailsFooter } from "../components/DetailsFooter"
+import { ConfirmBuyModal } from "../components/ConfirmBuyModal"
+import { useState } from "react"
 
 type BookDetailsProps = {
   book: {
@@ -26,9 +28,12 @@ type BookDetailsProps = {
 }
 
 export const BookDetails = ({ book }: BookDetailsProps) => {
-  const handleAddToLibrary = () => {
-    console.log("Adicionando à biblioteca:", book.title)
-  }
+  const [visible, setVisible] = useState(false)
+
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+
+  const handleAddToLibrary = () => {}
 
   const handleBuyBook = () => {
     if (book.buyLink && book.buyLink !== "#") {
@@ -79,9 +84,15 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
 
         <DetailsFooter
           onAddToLibrary={handleAddToLibrary}
-          onBuyBook={handleBuyBook}
+          showModal={showModal}
         />
       </View>
+      
+      <ConfirmBuyModal
+        visible={visible}
+        hideModal={hideModal}
+        onBuyBook={handleBuyBook}
+      />
     </ScrollView>
   )
 }

@@ -1,12 +1,12 @@
 import SafeAreaWrapper from "@/components/ui/SafeAreaWrapper"
 import { Header } from "@/components/Header"
-import { ListsContainer } from "@/features/lists/container/ListsContainer"
+import { LibraryContent } from "@/features/lists/container/ListsContent"
 
 const LibraryScreen = () => {
   return (
     <SafeAreaWrapper>
       <Header />
-      <ListsContainer />
+      <LibraryContent />
     </SafeAreaWrapper>
   )
 }

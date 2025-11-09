@@ -2,20 +2,21 @@ import { theme } from "@/theme"
 import { IconButton, List } from "react-native-paper"
 import { styles } from "../container/styles"
 import { TouchableOpacity } from "react-native"
+import { router } from "expo-router"
 
 type ListItemProps = {
+  id: string
   title: string
   description: string
   onPress: () => void
   onPressIcon: () => void
 }
 
-export const ListItem = ({ title, description, onPress, onPressIcon }: ListItemProps) => {
+export const ListItem = ({ id, title, description, onPress, onPressIcon }: ListItemProps) => {
   return (
-    <TouchableOpacity activeOpacity={1} onPress={onPress}>
+    <TouchableOpacity activeOpacity={1} onPress={() => router.push(`/list-details/${id}`)}>
       <List.Item
         title={title}
-        onPress={onPress}
         style={styles.listItem}
         description={description}
         right={() => (

@@ -1,6 +1,5 @@
 import { Stack } from "expo-router";
 import { PaperProvider } from "react-native-paper";
-// @ts-ignore
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { theme } from "../theme";
 import { StatusBar } from "react-native";
@@ -14,7 +13,6 @@ const RootLayout = () => {
       <PaperProvider
         theme={theme}
         settings={{
-          // Setando MaterialCommunityIcons como fonte padrão para renderizar alguns icons ( melhor que nada )
           icon: (props) => <MaterialCommunityIcons {...props} />,
         }}
       >
@@ -29,6 +27,7 @@ const RootLayout = () => {
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="book-form" />
           <Stack.Screen name="details/[id]" />
+          <Stack.Screen name="list-details/[id]" />
         </Stack>
 
         <StatusBar

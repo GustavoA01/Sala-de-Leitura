@@ -1,8 +1,8 @@
 import { ListAccordion } from "@/components/ListAccordion"
-import { mockData } from "@/data/constants"
+import { accordionMock } from "@/data/mocks"
 
 export const HomeList = () => {
   return (
-    <ListAccordion data={mockData} />
+    <ListAccordion data={accordionMock} />
   )
 }

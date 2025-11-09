@@ -1,7 +1,7 @@
 import { StackHeader } from "@/components/StackHeader"
 import SafeAreaWrapper from "@/components/ui/SafeAreaWrapper"
 import { useLocalSearchParams } from "expo-router"
-import { booksMock } from "@/data/constants"
+import { booksMock } from "@/data/mocks"
 import { BookDetails } from "@/features/details/container/BookDetails"
 
 const DetailsScreen = () => {

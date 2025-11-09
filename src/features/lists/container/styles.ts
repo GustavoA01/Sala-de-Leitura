@@ -4,6 +4,7 @@ import { theme } from "../../../theme";
 export const styles = StyleSheet.create({
   container: {
     paddingHorizontal: 16,
+    paddingBottom: 170,
   },
 
   listItem: {

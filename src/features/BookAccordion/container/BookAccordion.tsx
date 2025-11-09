@@ -25,6 +25,7 @@ export const BookAccordion = ({
   const bottomSheetRef = useRef<any>(null)
   const onOpenBottomSheet = () => bottomSheetRef.current?.open()
   const pathname = usePathname()
+  const isListPathName = pathname.includes('/list-details')
 
   const handleEdit = () => {
     bottomSheetRef.current?.close()
@@ -66,13 +67,13 @@ export const BookAccordion = ({
         />
       </List.Accordion>
 
-      <CustomBottomSheet height={300} bottomSheetRef={bottomSheetRef}>
+      <CustomBottomSheet height={isListPathName ? 350 : 300} bottomSheetRef={bottomSheetRef}>
         <BookEditOptions
           bookTitle={title}
           onEdit={handleEdit}
           onAddToList={handleAddToList}
           onRemoveFromList={
-            pathname === "/lists" ? handleRemoveFromList : undefined
+            isListPathName ? handleRemoveFromList : undefined
           }
           onDelete={handleDelete}
         />

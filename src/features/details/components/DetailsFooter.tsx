@@ -6,12 +6,12 @@ import { Button } from "react-native-paper"
 
 type DetailsFooterProps = {
   onAddToLibrary: () => void
-  onBuyBook: () => void
+  showModal: () => void
 }
 
 export const DetailsFooter = ({
   onAddToLibrary,
-  onBuyBook,
+  showModal,
 }: DetailsFooterProps) => {
   return (
     <View style={styles.buttonContainer}>
@@ -19,7 +19,7 @@ export const DetailsFooter = ({
       <Button
         buttonColor={theme.colors.secondary}
         mode="contained"
-        onPress={onBuyBook}
+        onPress={showModal}
       >
         Comprar Livro
       </Button>
