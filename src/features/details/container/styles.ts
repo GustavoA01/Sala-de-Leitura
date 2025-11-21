@@ -62,6 +62,8 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     color: "white",
     fontWeight: "600",
+    maxWidth: "80%",
+    textAlign: "right",
   },
   buttonContainer: {
     gap: 10,

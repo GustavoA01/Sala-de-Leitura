@@ -12,7 +12,9 @@ export const StackHeader = ({ title }: { title: string }) => {
         icon="arrow-left"
         onPress={() => router.back()}
       />
-      <Text variant="titleLarge">{title}</Text>
+      <Text numberOfLines={1} style={{ maxWidth: "80%" }} variant="titleLarge">
+        {title}
+      </Text>
     </View>
   )
 }

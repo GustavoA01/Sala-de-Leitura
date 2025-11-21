@@ -14,6 +14,8 @@
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
     "@react-native-vector-icons/material-design-icons": "^12.3.0",
+    "@tanstack/react-query": "^4.42.0",
+    "axios": "^1.13.2",
     "date-fns": "^4.1.0",
     "expo": "~54.0.20",
     "expo-constants": "~18.0.10",

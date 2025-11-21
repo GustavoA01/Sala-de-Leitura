@@ -1,13 +1,21 @@
 import { styles } from "./styles"
-import { Text } from "react-native-paper"
+import { ActivityIndicator, Text } from "react-native-paper"
 import { FlatList } from "react-native-gesture-handler"
 import { BookCard } from "../components/BookCard"
-import { booksMock } from "@/data/mocks"
+import { useGoogleBooksProvider } from "@/contexts/useGoogleBooksProvider"
 
 export const SearchContent = () => {
+  const { googleBooks, isLoadingGoogleBooks } = useGoogleBooksProvider()
+
+  if (isLoadingGoogleBooks) {
+    return (
+      <ActivityIndicator style={{ marginTop: 16 }} animating={true} />
+    )
+  }
+
   return (
     <FlatList
-      data={booksMock}
+      data={googleBooks ?? []}
       renderItem={({ item }) => <BookCard item={item} />}
       showsVerticalScrollIndicator={false}
       keyExtractor={(item) => item.id}

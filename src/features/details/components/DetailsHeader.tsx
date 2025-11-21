@@ -26,13 +26,13 @@ export const DetailsHeader = ({
         <Text numberOfLines={2} style={styles.author}>
           {author}
         </Text>
-        {averageRating && (
+        {averageRating ? (
           <View style={styles.ratingContainer}>
             <Icon source="star" size={20} color={theme.colors.primary} />
             <Text style={styles.rating}>{averageRating}</Text>
-            <Text style={styles.ratingsCount}>({ratingsCount} avaliações)</Text>
+            <Text style={styles.ratingsCount}>{ratingsCount} avaliações</Text>
           </View>
-        )}
+        ) : null}
       </View>
 
       <Text style={styles.description}>{description}</Text>

@@ -7,11 +7,13 @@ import { Button } from "react-native-paper"
 type DetailsFooterProps = {
   onAddToLibrary: () => void
   showModal: () => void
+  isBookAvailable: boolean
 }
 
 export const DetailsFooter = ({
   onAddToLibrary,
   showModal,
+  isBookAvailable,
 }: DetailsFooterProps) => {
   return (
     <View style={styles.buttonContainer}>
@@ -20,6 +22,7 @@ export const DetailsFooter = ({
         buttonColor={theme.colors.secondary}
         mode="contained"
         onPress={showModal}
+        disabled={!isBookAvailable}
       >
         Comprar Livro
       </Button>

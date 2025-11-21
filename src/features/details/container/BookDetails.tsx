@@ -7,27 +7,9 @@ import { DetailsInfo } from "../components/DetailsInfo"
 import { DetailsFooter } from "../components/DetailsFooter"
 import { ConfirmBuyModal } from "../components/ConfirmBuyModal"
 import { useState } from "react"
+import { GoogleBook } from "@/data/types"
 
-type BookDetailsProps = {
-  book: {
-    title: string
-    author: string
-    averageRating: number
-    ratingsCount: number
-    description: string
-    imageLinks: {
-      thumbnail: string
-    }
-    pages: number
-    categories: string[]
-    publisher: string
-    publicationDate: string
-    language: string
-    buyLink: string
-  }
-}
-
-export const BookDetails = ({ book }: BookDetailsProps) => {
+export const BookDetails = ({ book }: { book: GoogleBook }) => {
   const [visible, setVisible] = useState(false)
 
   const showModal = () => setVisible(true)
@@ -36,13 +18,20 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
   const handleAddToLibrary = () => {}
 
   const handleBuyBook = () => {
-    if (book.buyLink && book.buyLink !== "#") {
-      Linking.openURL(book.buyLink).catch((err) =>
+    if (book.saleInfo?.buyLink && book.saleInfo.buyLink !== "#") {
+      Linking.openURL(book.saleInfo.buyLink).catch((err) =>
         console.error("Erro ao abrir link:", err)
       )
     } else {
       console.log("Link de compra não disponível")
     }
+  }
+
+  const cleanHtmlDescription = (description: string) => {
+    return description
+      .replace(/<br\s*\/?>/gi, "\n")
+      .replace(/<[^>]+>/g, "")
+      .trim()
   }
 
   return (
@@ -51,9 +40,9 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
       showsVerticalScrollIndicator={false}
     >
       <View style={styles.imageContainer}>
-        {book.imageLinks?.thumbnail ? (
+        {book.volumeInfo.imageLinks?.thumbnail ? (
           <Image
-            source={{ uri: book.imageLinks.thumbnail }}
+            source={{ uri: book.volumeInfo.imageLinks.thumbnail }}
             style={styles.image}
             resizeMode="contain"
           />
@@ -66,28 +55,31 @@ export const BookDetails = ({ book }: BookDetailsProps) => {
 
       <View>
         <DetailsHeader
-          title={book.title}
-          author={book.author}
-          averageRating={book.averageRating}
-          ratingsCount={book.ratingsCount}
-          description={book.description}
+          title={book.volumeInfo.title}
+          author={book.volumeInfo.authors?.[0] ?? ""}
+          averageRating={book.volumeInfo.averageRating ?? 0}
+          ratingsCount={book.volumeInfo.ratingsCount ?? 0}
+          description={cleanHtmlDescription(book.volumeInfo.description ?? "")}
         />
         <Divider bold style={{ marginVertical: 12 }} />
 
         <DetailsInfo
-          pages={book.pages}
-          categories={book.categories?.join(", ") || ""}
-          publisher={book.publisher}
-          publicationDate={book.publicationDate}
-          language={book.language}
+          pages={book.volumeInfo.pageCount ?? 0}
+          categories={book.volumeInfo.categories?.join(", ") || "-"}
+          publisher={book.volumeInfo.publisher ?? "Editora não disponível"}
+          publicationDate={
+            book.volumeInfo.publishedDate ?? "Data de publicação não disponível"
+          }
+          language={book.volumeInfo.language ?? "Idioma não disponível"}
         />
 
         <DetailsFooter
           onAddToLibrary={handleAddToLibrary}
           showModal={showModal}
+          isBookAvailable={book.saleInfo?.saleability === "FOR_SALE"}
         />
       </View>
-      
+
       <ConfirmBuyModal
         visible={visible}
         hideModal={hideModal}
