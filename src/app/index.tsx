@@ -13,16 +13,15 @@ const LoginScreen = () => {
     }, 2000)
   }, [])
 
-  
   // useEffect(() => {
   //   setTimeout(() => {
-  //     router.push('/sign-up')
+  //     router.push("/(tabs)/library")
   //   }, 2000)
   // }, [])
 
   // useEffect(() => {
   //   setTimeout(() => {
-  //     router.push('/details/5')
+  //     router.push('/sign-up')
   //   }, 2000)
   // }, [])
 

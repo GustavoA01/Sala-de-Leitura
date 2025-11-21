@@ -8,6 +8,7 @@ import { DetailsFooter } from "../components/DetailsFooter"
 import { ConfirmBuyModal } from "../components/ConfirmBuyModal"
 import { useState } from "react"
 import { GoogleBook } from "@/data/types"
+import { router } from "expo-router"
 
 export const BookDetails = ({ book }: { book: GoogleBook }) => {
   const [visible, setVisible] = useState(false)
@@ -15,7 +16,7 @@ export const BookDetails = ({ book }: { book: GoogleBook }) => {
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
 
-  const handleAddToLibrary = () => {}
+  const handleAddToLibrary = () => router.push(`/book-form?id=${book.id}`)
 
   const handleBuyBook = () => {
     if (book.saleInfo?.buyLink && book.saleInfo.buyLink !== "#") {

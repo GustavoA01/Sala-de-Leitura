@@ -16,7 +16,7 @@ export const useBookForm = () => {
     // @ts-ignore
     resolver: zodResolver(bookFormSchema),
   })
-  const { handleSubmit, formState: { isValid } } = methods
+  const { handleSubmit, reset, formState: { isValid } } = methods
 
   const handleStartDateChange = (date: Date | undefined) => {
     setStartDate(date)
@@ -66,6 +66,7 @@ export const useBookForm = () => {
     setEndDate,
     methods,
     handleSubmit,
+    reset,
     isValid,
     onSubmit,
     handleStartDateChange,

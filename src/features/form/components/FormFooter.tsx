@@ -1,6 +1,6 @@
 import { View } from "react-native"
 import { Button, Text } from "react-native-paper"
-import { styles } from "./styles"
+import { styles } from "../container/styles"
 import { theme } from "@/theme"
 
 type FormFooterProps = {

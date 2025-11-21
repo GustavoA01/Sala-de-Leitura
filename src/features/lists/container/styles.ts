@@ -17,4 +17,20 @@ export const styles = StyleSheet.create({
     alignSelf: "flex-end",
     marginBottom: 16,
   },
+
+  addModalContainer: {
+    padding: 16,
+    justifyContent: "space-between",
+    paddingBottom:24,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.roundness,
+    marginHorizontal: 16
+  },
+
+  addModalHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 16
+  }
 });

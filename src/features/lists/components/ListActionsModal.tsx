@@ -1,31 +1,47 @@
-import { View } from "react-native"
-import { Button, Text } from "react-native-paper"
+import { TouchableOpacity, View } from "react-native"
+import { Divider, List, Text } from "react-native-paper"
 import { theme } from "@/theme"
 
 type ListActionsModalProps = {
+  onOpenAddListModal: () => void
   listTitle: string
   listId: string
 }
 
 export const ListActionsModal = ({
+  onOpenAddListModal,
   listTitle,
   listId,
 }: ListActionsModalProps) => {
-
   return (
-    <View style={{ padding: 16, justifyContent: "space-between", flex:1 }}>
+    <View style={{ padding: 16, justifyContent: "space-between", flex: 1 }}>
       <Text
         variant="titleLarge"
         style={{ color: theme.colors.onSurface, fontWeight: "bold" }}
       >
         {listTitle}
       </Text>
-      <View style={{ gap: 8, marginBottom: 16 }}>
-        <Button mode="outlined">Editar lista</Button>
-        <Button mode="outlined" textColor={theme.colors.error}>
-          Excluir lista
-        </Button>
-      </View>
+      <Divider style={{ backgroundColor: theme.colors.primary }} />
+
+      <List.Section>
+        <TouchableOpacity onPress={onOpenAddListModal}>
+          <List.Item
+            title="Editar lista"
+            left={() => (
+              <List.Icon color={theme.colors.secondary} icon="pencil" />
+            )}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => {}}>
+          <List.Item
+            title="Excluir lista"
+            left={() => (
+              <List.Icon color={theme.colors.error} icon="trash-can-outline" />
+            )}
+          />
+        </TouchableOpacity>
+      </List.Section>
     </View>
   )
 }

@@ -7,6 +7,10 @@ import { FormFooter } from "@/features/form/components/FormFooter"
 import { router } from "expo-router"
 import { useBookForm } from "@/hooks/useBookForm"
 import { Form } from "@/features/form/container/Form"
+import { useQuery } from "@tanstack/react-query"
+import { getGoogleBookById } from "@/api/getGoogleBooks"
+import { useEffect } from "react"
+import { ActivityIndicator } from "react-native-paper"
 
 const BookFormScreen = () => {
   const { id } = useLocalSearchParams()
@@ -24,7 +28,32 @@ const BookFormScreen = () => {
     handleSubmit,
     isValid,
     onSubmit,
+    reset,
   } = useBookForm()
+  
+  const { data: googleBook, isLoading } = useQuery({
+    queryKey: ["google-book", id],
+    queryFn: () => getGoogleBookById(id as string),
+    enabled: !!id,
+  })
+
+  useEffect(()=> {
+    if (googleBook) {
+      reset({
+        title: googleBook.volumeInfo.title,
+        author: googleBook.volumeInfo.authors?.join(', ') ?? '',
+        category: googleBook.volumeInfo.categories?.join(', ') ?? '',
+      })
+    }
+  },[id, googleBook, reset])
+
+  if (isLoading) {
+    return (
+      <SafeAreaWrapper>
+        <ActivityIndicator style={{ alignSelf: "center", marginTop: 16 }} animating={true} />
+      </SafeAreaWrapper>
+    )
+  }
 
   return (
     <SafeAreaWrapper>
