@@ -1,9 +1,9 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore"
+import { addDoc, arrayRemove, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where, writeBatch } from "firebase/firestore"
 import { auth, db } from "../firebaseConfig"
 import { BookType } from "@/data/types"
 
 const bookListName = "book-list"
-const bookListCollection = collection(db, bookListName)
+export const bookListCollection = collection(db, bookListName)
 
 export const createBook = async (book: Omit<BookType, "id" | "addedIn" | "userId">) => {
   const user = auth.currentUser
@@ -59,6 +59,18 @@ export const updateBook = async (id: string, book: Omit<BookType, "id" | "addedI
 export const deleteBook = async (id: string) => {
   try {
     await deleteDoc(doc(bookListCollection, id))
+
+    const listsQuery = query(collection(db, "listas"), where("bookIds", "array-contains", id));
+    const listasSnapshot = await getDocs(listsQuery);
+
+    const batch = writeBatch(db);
+    listasSnapshot.forEach(listaDoc => {
+      batch.update(listaDoc.ref, {
+        bookIds: arrayRemove(id)
+      });
+    });
+
+    await batch.commit();
   } catch (error) {
     console.log(error)
     throw error

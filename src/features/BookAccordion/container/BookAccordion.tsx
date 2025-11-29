@@ -8,6 +8,7 @@ import { BookEditOptions } from "../components/BookEditOptions"
 import { BookType } from "@/data/types"
 import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal"
 import { useBookAccordion } from "../hook/useBookAccordion"
+import { AddToListSheet } from "./AddToListSheet"
 
 export const BookAccordion = ({
   id,
@@ -32,6 +33,7 @@ export const BookAccordion = ({
     handelDeleteBook,
     handleRemoveFromList,
     bottomSheetRef,
+    listBottomSheet,
   } = useBookAccordion()
 
   return (
@@ -65,7 +67,7 @@ export const BookAccordion = ({
           bookTitle={title}
           onEdit={() => handleEdit(id)}
           onAddToList={handleAddToList}
-          onRemoveFromList={isListPathName ? handleRemoveFromList : undefined}
+          onRemoveFromList={isListPathName ? () => handleRemoveFromList(id) : undefined}
           onDelete={onDelete}
         />
       </CustomBottomSheet>
@@ -77,6 +79,10 @@ export const BookAccordion = ({
           handelDeleteBook={() => handelDeleteBook(id)}
         />
       </Portal>
+
+      <CustomBottomSheet height={350} bottomSheetRef={listBottomSheet}>
+        <AddToListSheet bookId={id}/>
+      </CustomBottomSheet>
     </View>
   )
 }

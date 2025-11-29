@@ -137,7 +137,6 @@ export const useLists = () => {
   })
 
   const confirmDeleteList = () => {
-    console.log(listId)
     deleteListFn(listId)
   }
 
@@ -158,6 +157,7 @@ export const useLists = () => {
     onCreateList,
     onUpdateList,
     isEditing,
+    updateListFn,
     onDeleteList,
     confirmDeleteList,
     deleteModalVisible,

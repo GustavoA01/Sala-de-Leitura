@@ -1,10 +1,9 @@
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, updateDoc, where } from "firebase/firestore"
 import { ListType } from "@/data/types"
 import { auth, db } from "../firebaseConfig"
-import { AddListFormType } from "@/data/schemas"
 
 const listCollectionName = "lists"
-const listCollection = collection(db, listCollectionName)
+export const listCollection = collection(db, listCollectionName)
 
 export const createList = async (list: Omit<ListType, "id" | "userId" | "books">) => {
   const user = auth.currentUser
@@ -53,7 +52,6 @@ export const updateList = async (id: string, list: Partial<ListType>) => {
 }
 
 export const deleteList = async (id: string) => {
-  console.log(id)
   try {
     await deleteDoc(doc(listCollection, id))
   } catch (error) {

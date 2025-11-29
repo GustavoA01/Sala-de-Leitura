@@ -4,10 +4,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { deleteBook } from "@/services/books"
 import { Alert } from "react-native"
 import { router } from "expo-router"
+import { useLists } from "@/features/lists/hook/useLists"
 
 export const useBookAccordion = () => {
   const queryClient = useQueryClient()
+  const {lists, updateListFn} = useLists()
   const bottomSheetRef = useRef<any>(null)
+  const listBottomSheet = useRef<any>(null)
   const onOpenBottomSheet = () => bottomSheetRef.current?.open()
   const pathname = usePathname()
   const isListPathName = pathname.includes("/list-details")
@@ -38,6 +41,7 @@ export const useBookAccordion = () => {
 
   const handleAddToList = () => {
     bottomSheetRef.current?.close()
+    listBottomSheet.current?.open()
   }
 
   const onDelete = () => {
@@ -50,8 +54,14 @@ export const useBookAccordion = () => {
     deleteBookFn(id)
   }
 
-  const handleRemoveFromList = () => {
-    bottomSheetRef.current?.close()
+  const handleRemoveFromList = (id: string) => {
+    const list = lists?.find((list) => list.books.includes(id))
+    if (list) {
+      const newList = { ...list, books: list?.books.filter((book) => book !== id) }
+      updateListFn({ id: list.id, list: newList })
+      queryClient.invalidateQueries({ queryKey: ["list-books", list.id] })
+      bottomSheetRef.current?.close()
+    }
   }
 
   return {
@@ -67,5 +77,6 @@ export const useBookAccordion = () => {
     handelDeleteBook,
     handleRemoveFromList,
     bottomSheetRef,
+    listBottomSheet,
   }
 }
