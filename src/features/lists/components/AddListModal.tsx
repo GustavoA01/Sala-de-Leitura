@@ -1,56 +1,49 @@
 import { InputController } from "@/components/InputController"
 import { theme } from "@/theme"
 import { View } from "react-native"
-import { Button, IconButton, Text } from "react-native-paper"
-import { FormProvider, useForm } from "react-hook-form"
+import { ActivityIndicator, Button, IconButton, Text } from "react-native-paper"
+import { useFormContext } from "react-hook-form"
 import { styles } from "../container/styles"
-import { AddListFormType, addListSchema } from "@/data/schemas"
-import { zodResolver } from "@hookform/resolvers/zod"
+import { AddListFormType } from "@/data/schemas"
 
 export const AddListModal = ({
+  isCreatingListLoading,
   onCloseAddListModal,
-  listId,
+  onSubmit,
+  isEditing,
 }: {
+  isCreatingListLoading: boolean
   listId?: string
   onCloseAddListModal: () => void
+  onSubmit: () => void
+  isEditing: boolean
 }) => {
-  const methods = useForm<AddListFormType>({
-    resolver: zodResolver(addListSchema),
-  })
   const {
-    handleSubmit,
     formState: { isValid },
-  } = methods
-
-  const onSubmit = (data: AddListFormType) => {
-    console.log(data)
-  }
+  } = useFormContext<AddListFormType>()
 
   return (
-    <View >
+    <View>
       <View style={styles.addModalHeader}>
         <Text
           variant="titleLarge"
           style={{ color: theme.colors.onSurface, fontWeight: "bold" }}
         >
-          Adicionar lista
+          {isEditing ? "Salvar" : "Adicionar lista"}
         </Text>
         <IconButton icon="close" onPress={onCloseAddListModal} size={24} />
       </View>
 
-      <FormProvider {...methods}>
-        <View style={{gap: 4, marginBottom: 16}}>
-          <InputController<AddListFormType> name="title" label="Nome" />
-          <InputController<AddListFormType> name="listDescription" label="Descrição" />
-          </View>
-          <Button
-            mode="contained"
-            onPress={handleSubmit(onSubmit)}
-            disabled={!isValid}
-          >
-            Criar lista
-          </Button>
-      </FormProvider>
+      <View style={{ gap: 4, marginBottom: 16 }}>
+        <InputController<AddListFormType> name="title" label="Nome" />
+        <InputController<AddListFormType>
+          name="listDescription"
+          label="Descrição"
+        />
+      </View>
+      <Button mode="contained" onPress={onSubmit} disabled={!isValid}>
+        {isCreatingListLoading ? <ActivityIndicator /> : isEditing ? "Salvar" : "Criar lista"}
+      </Button>
     </View>
   )
 }

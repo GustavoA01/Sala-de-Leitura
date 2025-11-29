@@ -14,6 +14,14 @@ export interface BookType {
   userId: string
 }
 
+export interface ListType {
+  id: string
+  title: string
+  description?: string
+  books: string[]
+  userId: string
+}
+
 export type GoogleBooksContextType = {
   googleBooks: GoogleBook[] | undefined
   setQuery: (query: string) => void

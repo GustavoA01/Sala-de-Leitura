@@ -8,11 +8,10 @@ type ListItemProps = {
   id: string
   title: string
   description: string
-  onPress: () => void
   onPressIcon: () => void
 }
 
-export const ListItem = ({ id, title, description, onPress, onPressIcon }: ListItemProps) => {
+export const ListItem = ({ id, title, description, onPressIcon }: ListItemProps) => {
   return (
     <TouchableOpacity activeOpacity={1} onPress={() => router.push(`/list-details/${id}`)}>
       <List.Item

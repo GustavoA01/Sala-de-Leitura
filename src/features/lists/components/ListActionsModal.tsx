@@ -3,16 +3,20 @@ import { Divider, List, Text } from "react-native-paper"
 import { theme } from "@/theme"
 
 type ListActionsModalProps = {
-  onOpenAddListModal: () => void
+  onOpenAddListModal: (id?: string) => void
   listTitle: string
   listId: string
+  onDeleteList: () => void
+  onCloseBottomSheet: () => void
 }
 
 export const ListActionsModal = ({
   onOpenAddListModal,
   listTitle,
   listId,
+  onDeleteList,
 }: ListActionsModalProps) => {
+
   return (
     <View style={{ padding: 16, justifyContent: "space-between", flex: 1 }}>
       <Text
@@ -24,7 +28,7 @@ export const ListActionsModal = ({
       <Divider style={{ backgroundColor: theme.colors.primary }} />
 
       <List.Section>
-        <TouchableOpacity onPress={onOpenAddListModal}>
+        <TouchableOpacity onPress={() => onOpenAddListModal(listId)}>
           <List.Item
             title="Editar lista"
             left={() => (
@@ -33,7 +37,7 @@ export const ListActionsModal = ({
           />
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={onDeleteList}>
           <List.Item
             title="Excluir lista"
             left={() => (

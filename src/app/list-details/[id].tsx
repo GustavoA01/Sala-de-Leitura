@@ -1,27 +1,48 @@
 import SafeAreaWrapper from "@/components/ui/SafeAreaWrapper"
 import { StackHeader } from "@/components/StackHeader"
-import { useLocalSearchParams, usePathname } from "expo-router"
+import { useLocalSearchParams } from "expo-router"
 import { AddButton } from "@/components/ui/AddButton"
 import { ListAccordion } from "@/components/ListAccordion"
-import { accordionMock } from "@/data/mocks"
-import { Text } from "react-native-paper"
+import { ActivityIndicator, Text } from "react-native-paper"
 import { theme } from "@/theme"
+import { useQuery } from "@tanstack/react-query"
+import { getListById } from "@/services/lists"
 
 const ListDetailsScreen = () => {
   const { id } = useLocalSearchParams()
-  
+
+  const { data: list, isLoading } = useQuery({
+    queryKey: ["list", id],
+    queryFn: () => getListById(id as string),
+    enabled: !!id,
+  })
+
+  if (isLoading) {
+    return (
+      <SafeAreaWrapper>
+        <ActivityIndicator
+          style={{ alignSelf: "center", marginTop: 16 }}
+          animating={true}
+        />
+      </SafeAreaWrapper>
+    )
+  }
+
   return (
     <SafeAreaWrapper>
-      <StackHeader title="Detalhes da lista" />
+      <StackHeader title={list?.title ?? "Detalhes da lista"} />
+
       <Text
         style={{ margin: 16, color: theme.colors.onSurfaceVariant }}
         variant="titleMedium"
       >
-        Melhores livros de fantasia e ficção científica que li nos últimos cinco
-        anos
+        {list?.description}
       </Text>
-      <AddButton onPress={() => {}} style={{ alignSelf: "flex-end" }} />
-      <ListAccordion data={accordionMock} />
+      <AddButton
+        onPress={() => {}}
+        style={{ alignSelf: "flex-end", marginBottom: 16 }}
+      />
+      <ListAccordion data={[]} />
     </SafeAreaWrapper>
   )
 }
