@@ -14,7 +14,7 @@ import { ActivityIndicator } from "react-native-paper"
 
 const BookFormScreen = () => {
   const { id } = useLocalSearchParams()
-  const isEditing = !!id
+  const isEditing = id === undefined ? false : true
   const {
     selectedStatus,
     setSelectedStatus,
@@ -30,30 +30,22 @@ const BookFormScreen = () => {
     onSubmit,
     reset,
   } = useBookForm()
-  
-  const { data: googleBook, isLoading } = useQuery({
+
+  const { data: googleBook } = useQuery({
     queryKey: ["google-book", id],
     queryFn: () => getGoogleBookById(id as string),
-    enabled: !!id,
+    enabled: isEditing,
   })
 
-  useEffect(()=> {
+  useEffect(() => {
     if (googleBook) {
       reset({
         title: googleBook.volumeInfo.title,
-        author: googleBook.volumeInfo.authors?.join(', ') ?? '',
-        category: googleBook.volumeInfo.categories?.join(', ') ?? '',
+        author: googleBook.volumeInfo.authors?.join(", ") ?? "",
+        category: googleBook.volumeInfo.categories?.join(", ") ?? "",
       })
     }
-  },[id, googleBook, reset])
-
-  if (isLoading) {
-    return (
-      <SafeAreaWrapper>
-        <ActivityIndicator style={{ alignSelf: "center", marginTop: 16 }} animating={true} />
-      </SafeAreaWrapper>
-    )
-  }
+  }, [googleBook, reset])
 
   return (
     <SafeAreaWrapper>

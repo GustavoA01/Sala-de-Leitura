@@ -32,5 +32,16 @@ export const styles = StyleSheet.create({
   settingsTitle: {
     color: theme.colors.onBackground,
   },
-  
+
+  accountContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+
+  accountText: {
+    color: theme.colors.onBackground,
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 })

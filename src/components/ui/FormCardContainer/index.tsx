@@ -31,7 +31,7 @@ export const FormCardContainer = ({
         <Text variant="bodyMedium">{title}</Text>
       </View>
       <Divider
-        style={{ backgroundColor: theme.colors.outline, marginBottom: 8 }}
+        style={styles.divider}
       />
 
       <Card.Content style={{ gap: 16, ...(contentStyle as ViewStyle) }}>

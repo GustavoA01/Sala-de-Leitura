@@ -20,4 +20,9 @@ export const styles = StyleSheet.create({
     gap: 8,
     alignItems: "center",
   },
+
+  divider: {
+    backgroundColor: theme.colors.outline,
+    marginBottom: 8,
+  }
 })
