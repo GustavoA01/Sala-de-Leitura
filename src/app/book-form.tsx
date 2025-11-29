@@ -7,14 +7,17 @@ import { FormFooter } from "@/features/form/components/FormFooter"
 import { router } from "expo-router"
 import { useBookForm } from "@/hooks/useBookForm"
 import { Form } from "@/features/form/container/Form"
-import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery } from "@tanstack/react-query"
 import { getGoogleBookById } from "@/api/getGoogleBooks"
 import { useEffect } from "react"
-import { ActivityIndicator } from "react-native-paper"
+import { getBookById } from "@/services/books"
+import { statusLabel } from "@/data/constants"
+import { BookType, GoogleBook } from "@/data/types"
+import { BookFormType } from "@/data/schemas"
 
 const BookFormScreen = () => {
-  const { id } = useLocalSearchParams()
-  const isEditing = id === undefined ? false : true
+  const { id, source } = useLocalSearchParams()
+
   const {
     selectedStatus,
     setSelectedStatus,
@@ -22,35 +25,74 @@ const BookFormScreen = () => {
     setLabel,
     startDate,
     endDate,
+    setStartDate,
+    setEndDate,
     handleStartDateChange,
     handleEndDateChange,
     methods,
     handleSubmit,
     isValid,
-    onSubmit,
+    onCreateBook,
+    onUpdate,
     reset,
     isLoading,
-  } = useBookForm()
+  } = useBookForm({ source: source as "google" | "firebase" })
 
-  const { data: googleBook } = useQuery({
-    queryKey: ["google-book", id],
-    queryFn: () => getGoogleBookById(id as string),
-    enabled: isEditing,
+  const { data: bookData } = useQuery<GoogleBook | BookType | null>({
+    queryKey: ["book-data", id, source],
+    queryFn: () => {
+      if (!id) return null
+      if (source === "google") {
+        return getGoogleBookById(id as string)
+      } else if (source === "firebase") {
+        return getBookById(id as string)
+      } else {
+        return null
+      }
+    },
+    enabled: !!id && !!source,
   })
 
   useEffect(() => {
-    if (googleBook) {
-      reset({
-        title: googleBook.volumeInfo.title,
-        author: googleBook.volumeInfo.authors?.join(", ") ?? "",
-        category: googleBook.volumeInfo.categories?.join(", ") ?? "",
-      })
+    if (bookData) {
+      if (source === "google") {
+        const googleBook = bookData as GoogleBook
+        reset({
+          title: googleBook.volumeInfo.title,
+          author: googleBook.volumeInfo.authors?.join(", ") ?? "",
+          category: googleBook.volumeInfo.categories?.join(", ") ?? "",
+        })
+      } else {
+        const book = bookData as BookType
+        reset({
+          title: book.title,
+          author: book.author ?? "",
+          category: book.category ?? "",
+          rating: book.rating ?? undefined,
+          description: book.description ?? "",
+        })
+
+        setSelectedStatus(book.status)
+        setLabel(statusLabel[book.status].label)
+        setStartDate(book.startDate ? book.startDate.toDate() : undefined)
+        setEndDate(book.endDate ? book.endDate.toDate() : undefined)
+      }
     }
-  }, [googleBook, reset])
+  }, [bookData, reset])
+
+  const onSubmit = (data: BookFormType) => {
+    if (source === "firebase") {
+      onUpdate(id as string, data)
+    } else {
+      onCreateBook(data)
+    }
+  }
 
   return (
     <SafeAreaWrapper>
-      <StackHeader title={isEditing ? "Editar livro" : "Adicionar livro"} />
+      <StackHeader
+        title={source === "firebase" ? "Editar livro" : "Adicionar livro"}
+      />
       <View style={{ flex: 1, paddingHorizontal: 16 }}>
         <FormProvider {...methods}>
           <Form

@@ -33,7 +33,7 @@ export const FormFooter = ({
         disabled={!isValid}
       >
         {isLoading ? (
-          <ActivityIndicator size="small" color='white' />
+          <ActivityIndicator color={theme.colors.onSurface} />
         ) : (
           "Salvar"
         )}

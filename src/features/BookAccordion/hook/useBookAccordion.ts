@@ -27,7 +27,13 @@ export const useBookAccordion = () => {
 
   const handleEdit = (id: string) => {
     bottomSheetRef.current?.close()
-    router.push(`/book-form?id=${id}`)
+    router.push({
+      pathname: "/book-form",
+      params: {
+        id, 
+        source: "firebase",
+      }
+    })
   }
 
   const handleAddToList = () => {

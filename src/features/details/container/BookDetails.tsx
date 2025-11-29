@@ -16,7 +16,15 @@ export const BookDetails = ({ book }: { book: GoogleBook }) => {
   const showModal = () => setVisible(true)
   const hideModal = () => setVisible(false)
 
-  const handleAddToLibrary = () => router.push(`/book-form?id=${book.id}`)
+  const handleAddToLibrary = () => {
+    router.push({
+      pathname: "/book-form",
+      params: {
+        id: book.id,
+        source: "google",
+      },
+    })
+  }
 
   const handleBuyBook = () => {
     if (book.saleInfo?.buyLink && book.saleInfo.buyLink !== "#") {

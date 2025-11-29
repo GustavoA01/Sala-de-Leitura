@@ -1,4 +1,4 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, query, serverTimestamp, where } from "firebase/firestore"
+import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where } from "firebase/firestore"
 import { auth, db } from "../firebaseConfig"
 import { BookType } from "@/data/types"
 
@@ -29,6 +29,27 @@ export const getBooks = async (): Promise<BookType[]> => {
     })) as BookType[]
 
     return books
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export const getBookById = async (id: string): Promise<BookType> => {
+  try {
+    const docRef = doc(bookListCollection, id)
+    const docSnap = await getDoc(docRef)
+
+    return docSnap.data() as BookType
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
+export const updateBook = async (id: string, book: Omit<BookType, "id" | "addedIn" | "userId">) => {
+  try {
+    await updateDoc(doc(bookListCollection, id), { ...book })
   } catch (error) {
     console.log(error)
     throw error

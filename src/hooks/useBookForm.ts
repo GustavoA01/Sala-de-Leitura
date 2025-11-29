@@ -7,10 +7,15 @@ import { Alert } from "react-native"
 import { BookType } from "@/data/types"
 import { Timestamp } from "firebase/firestore"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
-import { createBook } from "@/services/books"
+import { createBook, updateBook } from "@/services/books"
 import { router } from "expo-router"
 
-export const useBookForm = () => {
+type UpdateBookParams = {
+  id: string
+  book: Omit<BookType, "id" | "addedIn" | "userId">
+}
+
+export const useBookForm = ({ source }: { source: "google" | "firebase" }) => {
   const queryClient = useQueryClient()
   const [selectedStatus, setSelectedStatus] = useState<number>(0)
   const [label, setLabel] = useState<string>(statusLabel[selectedStatus].label)
@@ -23,7 +28,7 @@ export const useBookForm = () => {
   })
   const { handleSubmit, reset, formState: { isValid } } = methods
 
-  const { mutateAsync: createBookFn, isPending: isLoading } = useMutation({
+  const { mutateAsync: createBookFn, isPending: isCreatingBookLoading } = useMutation({
     mutationFn: createBook,
     onSuccess: () => {
       Alert.alert("Livro adicionado com sucesso")
@@ -32,6 +37,18 @@ export const useBookForm = () => {
     },
     onError: () => {
       Alert.alert("Erro ao adicionar livro")
+    }
+  })
+
+  const { mutateAsync: updateBookFn, isPending: isUpdatingBookLoading } = useMutation({
+    mutationFn: ({ id, book }: UpdateBookParams) => updateBook(id, book),
+    onSuccess: () => {
+      Alert.alert("Livro atualizado com sucesso")
+      queryClient.invalidateQueries({ queryKey: ["books"] })
+      router.back()
+    },
+    onError: () => {
+      Alert.alert("Erro ao atualizar livro")
     }
   })
 
@@ -53,7 +70,7 @@ export const useBookForm = () => {
     return true
   }
 
-  const onSubmit = async (data: BookFormType) => {
+  const onCreateBook = async (data: BookFormType) => {
     if (!dateVerification()) {
       Alert.alert("Datas inválidas", "A data de término deve ser maior que a data de início")
       return
@@ -73,6 +90,21 @@ export const useBookForm = () => {
     await createBookFn(newBook)
   }
 
+  const onUpdate = async (id: string, data: BookFormType) => {
+    const newBook: Omit<BookType, "id" | "addedIn" | "userId"> = {
+      title: data.title,
+      author: data.author ?? '',
+      description: data.description ?? '',
+      category: data.category ?? '',
+      rating: data.rating ?? null,
+      status: selectedStatus,
+      startDate: startDate ? Timestamp.fromDate(startDate) : null,
+      endDate: endDate ? Timestamp.fromDate(endDate) : null,
+    }
+
+    await updateBookFn({ id, book: newBook })
+  }
+
   return {
     selectedStatus,
     setSelectedStatus,
@@ -86,9 +118,10 @@ export const useBookForm = () => {
     handleSubmit,
     reset,
     isValid,
-    onSubmit,
+    onCreateBook,
+    onUpdate,
     handleStartDateChange,
     handleEndDateChange,
-    isLoading,
+    isLoading: isCreatingBookLoading || isUpdatingBookLoading,
   }
 }
