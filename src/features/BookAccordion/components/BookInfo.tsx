@@ -44,7 +44,7 @@ export const BookInfo = ({
               variant="titleMedium"
               style={{ color: theme.colors.onSurface }}
             >
-              {item.value}
+              {item.value ? format(item.value.toDate(), "dd/MM/yyyy") : "-"}
             </Text>
           )}
         />
@@ -58,7 +58,7 @@ export const BookInfo = ({
         titleStyle={{ color: theme.colors.onSurfaceVariant }}
         right={() => (
           <Text variant="titleMedium" style={{ color: theme.colors.onSurface }}>
-            {category}
+            {category ? category : "-"}
           </Text>
         )}
       />
@@ -69,7 +69,7 @@ export const BookInfo = ({
           <List.Item
             title="COMENTÁRIO"
             titleStyle={styles.commentTitle}
-            description={description}
+            description={description ?? "-"}
             descriptionNumberOfLines={7}
             descriptionStyle={{
               fontSize: 16,

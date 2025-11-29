@@ -29,6 +29,7 @@ const BookFormScreen = () => {
     isValid,
     onSubmit,
     reset,
+    isLoading,
   } = useBookForm()
 
   const { data: googleBook } = useQuery({
@@ -69,6 +70,7 @@ const BookFormScreen = () => {
         onSave={handleSubmit(onSubmit)}
         onCancel={() => router.back()}
         isValid={isValid}
+        isLoading={isLoading}
       />
     </SafeAreaWrapper>
   )

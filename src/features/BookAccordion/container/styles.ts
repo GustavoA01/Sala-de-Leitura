@@ -2,7 +2,6 @@ import { theme } from "@/theme";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
-
   statusChip: {
     height: 24,
     minWidth: 50,
@@ -51,4 +50,11 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.outline,
   },
 
+  modalContainer: {
+    backgroundColor: theme.colors.surface,
+    padding: 20,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    gap: 24,
+  },
 })

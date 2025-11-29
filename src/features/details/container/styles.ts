@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.surface,
     padding: 20,
     marginHorizontal: 16,
-    borderRadius: 10,
+    borderRadius: 12,
     gap: 24
   },
 

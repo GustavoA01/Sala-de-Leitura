@@ -1,19 +1,19 @@
-import { Modal, Text, Button } from "react-native-paper"
-import { styles } from "../container/styles"
-import { theme } from "@/theme"
 import { View } from "react-native"
+import { Button, Modal, Text } from "react-native-paper"
+import { theme } from "@/theme"
+import { styles } from "../container/styles"
 
-type ConfirmBuyModalProps = {
+type ConfirmDeleteModalProps = {
   visible: boolean
   hideModal: () => void
-  onBuyBook: () => void
+  handelDeleteBook: () => void
 }
 
-export const ConfirmBuyModal = ({
+export const ConfirmDeleteModal = ({
   visible,
   hideModal,
-  onBuyBook,
-}: ConfirmBuyModalProps) => {
+  handelDeleteBook,
+}: ConfirmDeleteModalProps) => {
   return (
     <Modal
       visible={visible}
@@ -21,14 +21,14 @@ export const ConfirmBuyModal = ({
       contentContainerStyle={styles.modalContainer}
     >
       <Text style={{ textAlign: "center" }}>
-        Você será redirecionado para a Google Play Store.
+        Deseja realmente deletar este livro?
       </Text>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Button textColor={theme.colors.onSurface} onPress={hideModal}>
           Cancelar
         </Button>
-        <Button textColor={theme.colors.secondary} onPress={onBuyBook}>
-          Ok
+        <Button onPress={handelDeleteBook} textColor={theme.colors.secondary}>
+          Deletar
         </Button>
       </View>
     </Modal>

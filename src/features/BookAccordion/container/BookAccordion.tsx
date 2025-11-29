@@ -1,14 +1,13 @@
 import { View } from "react-native"
-import { List } from "react-native-paper"
+import { List, Portal } from "react-native-paper"
 import { AccordionDescription } from "../components/AccordionDescription"
 import { CustomBottomSheet } from "../../../components/ui/CustomBottomSheet"
-import { useRef } from "react"
 import { BookInfo } from "../components/BookInfo"
 import { RightAccordion } from "../components/RightAccordion"
 import { BookEditOptions } from "../components/BookEditOptions"
 import { BookType } from "@/data/types"
-import { router, usePathname } from "expo-router"
-import { format } from "date-fns"
+import { ConfirmDeleteModal } from "../components/ConfirmDeleteModal"
+import { useBookAccordion } from "../hook/useBookAccordion"
 
 export const BookAccordion = ({
   id,
@@ -21,28 +20,19 @@ export const BookAccordion = ({
   addedIn,
   startDate,
   endDate,
-}: BookType) => {
-  const bottomSheetRef = useRef<any>(null)
-  const onOpenBottomSheet = () => bottomSheetRef.current?.open()
-  const pathname = usePathname()
-  const isListPathName = pathname.includes('/list-details')
-
-  const handleEdit = () => {
-    bottomSheetRef.current?.close()
-    router.push(`/book-form?id=${id}`)
-  }
-
-  const handleAddToList = () => {
-    bottomSheetRef.current?.close()
-  }
-
-  const handleDelete = () => {
-    bottomSheetRef.current?.close()
-  }
-
-  const handleRemoveFromList = () => {
-    bottomSheetRef.current?.close()
-  }
+}: Omit<BookType, "userId">) => {
+  const {
+    onOpenBottomSheet,
+    isListPathName,
+    visible,
+    hideModal,
+    handleEdit,
+    handleAddToList,
+    onDelete,
+    handelDeleteBook,
+    handleRemoveFromList,
+    bottomSheetRef,
+  } = useBookAccordion()
 
   return (
     <View>
@@ -59,25 +49,34 @@ export const BookAccordion = ({
         right={() => (rating ? <RightAccordion rating={rating} /> : null)}
       >
         <BookInfo
-          addedIn={addedIn ? format(new Date(addedIn), "dd/MM/yyyy") : "-"}
-          startDate={startDate ? format(new Date(startDate), "dd/MM/yyyy") : "-"}
-          endDate={endDate ? format(new Date(endDate), "dd/MM/yyyy") : "-"}
-          category={category ?? "-"}
-          description={description ?? ""}
+          addedIn={addedIn}
+          startDate={startDate}
+          endDate={endDate}
+          category={category}
+          description={description}
         />
       </List.Accordion>
 
-      <CustomBottomSheet height={isListPathName ? 350 : 300} bottomSheetRef={bottomSheetRef}>
+      <CustomBottomSheet
+        height={isListPathName ? 350 : 300}
+        bottomSheetRef={bottomSheetRef}
+      >
         <BookEditOptions
           bookTitle={title}
-          onEdit={handleEdit}
+          onEdit={() => handleEdit(id)}
           onAddToList={handleAddToList}
-          onRemoveFromList={
-            isListPathName ? handleRemoveFromList : undefined
-          }
-          onDelete={handleDelete}
+          onRemoveFromList={isListPathName ? handleRemoveFromList : undefined}
+          onDelete={onDelete}
         />
       </CustomBottomSheet>
+
+      <Portal>
+        <ConfirmDeleteModal
+          visible={visible}
+          hideModal={hideModal}
+          handelDeleteBook={() => handelDeleteBook(id)}
+        />
+      </Portal>
     </View>
   )
 }

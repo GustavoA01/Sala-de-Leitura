@@ -1,5 +1,5 @@
 import { View } from "react-native"
-import { Button, Text } from "react-native-paper"
+import { ActivityIndicator, Button, Text } from "react-native-paper"
 import { styles } from "../container/styles"
 import { theme } from "@/theme"
 
@@ -7,9 +7,15 @@ type FormFooterProps = {
   onSave: () => void
   onCancel: () => void
   isValid: boolean
+  isLoading: boolean
 }
 
-export const FormFooter = ({ onSave, onCancel, isValid }: FormFooterProps) => {
+export const FormFooter = ({
+  onSave,
+  onCancel,
+  isValid,
+  isLoading,
+}: FormFooterProps) => {
   return (
     <View style={styles.footerContainer}>
       <Button
@@ -26,7 +32,11 @@ export const FormFooter = ({ onSave, onCancel, isValid }: FormFooterProps) => {
         onPress={onSave}
         disabled={!isValid}
       >
-        Salvar
+        {isLoading ? (
+          <ActivityIndicator size="small" color='white' />
+        ) : (
+          "Salvar"
+        )}
       </Button>
     </View>
   )

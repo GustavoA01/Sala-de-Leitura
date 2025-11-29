@@ -1,0 +1,65 @@
+import { useRef, useState } from "react"
+import { usePathname } from "expo-router"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { deleteBook } from "@/services/books"
+import { Alert } from "react-native"
+import { router } from "expo-router"
+
+export const useBookAccordion = () => {
+  const queryClient = useQueryClient()
+  const bottomSheetRef = useRef<any>(null)
+  const onOpenBottomSheet = () => bottomSheetRef.current?.open()
+  const pathname = usePathname()
+  const isListPathName = pathname.includes("/list-details")
+
+  const [visible, setVisible] = useState(false)
+
+  const showModal = () => setVisible(true)
+  const hideModal = () => setVisible(false)
+
+  const { mutateAsync: deleteBookFn } = useMutation({
+    mutationFn: deleteBook,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["books"] })
+      Alert.alert("Livro deletado com sucesso")
+    },
+  })
+
+  const handleEdit = (id: string) => {
+    bottomSheetRef.current?.close()
+    router.push(`/book-form?id=${id}`)
+  }
+
+  const handleAddToList = () => {
+    bottomSheetRef.current?.close()
+  }
+
+  const onDelete = () => {
+    bottomSheetRef.current?.close()
+    showModal()
+  }
+
+  const handelDeleteBook = (id: string) => {
+    hideModal()
+    deleteBookFn(id)
+  }
+
+  const handleRemoveFromList = () => {
+    bottomSheetRef.current?.close()
+  }
+
+  return {
+    onOpenBottomSheet,
+    isListPathName,
+    visible,
+    showModal,
+    hideModal,
+    deleteBookFn,
+    handleEdit,
+    handleAddToList,
+    onDelete,
+    handelDeleteBook,
+    handleRemoveFromList,
+    bottomSheetRef,
+  }
+}

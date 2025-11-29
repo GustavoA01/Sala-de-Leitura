@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 export interface BookType {
   id: string
   title: string
@@ -6,12 +8,11 @@ export interface BookType {
   description?: string
   rating?: number | null
   category?: string
-  addedIn: string
-  startDate?: string | null
-  endDate?: string | null
+  addedIn: Timestamp
+  startDate?: Timestamp | null
+  endDate?: Timestamp | null
+  userId: string
 }
-
-// TODO: trocar datas para Timestamp 
 
 export type GoogleBooksContextType = {
   googleBooks: GoogleBook[] | undefined
