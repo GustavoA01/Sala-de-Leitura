@@ -1,6 +1,4 @@
 import { ListAccordion } from "@/components/ListAccordion"
-import { useQuery } from "@tanstack/react-query"
-import { getBooks } from "@/services/books"
 import { ActivityIndicator, Text } from "react-native-paper"
 import { useFilters } from "./hooks/UseFilters"
 

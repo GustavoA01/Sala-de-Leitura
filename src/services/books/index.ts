@@ -1,4 +1,18 @@
-import { addDoc, arrayRemove, collection, deleteDoc, doc, getDoc, getDocs, query, serverTimestamp, updateDoc, where, writeBatch } from "firebase/firestore"
+import { 
+  QueryConstraint, 
+  addDoc, 
+  arrayRemove, 
+  collection, 
+  deleteDoc, 
+  doc, 
+  getDoc, 
+  getDocs, 
+  orderBy, 
+  query, 
+  serverTimestamp, 
+  updateDoc, 
+  where, 
+  writeBatch } from "firebase/firestore"
 import { auth, db } from "../firebaseConfig"
 import { BookType } from "@/data/types"
 
@@ -16,30 +30,37 @@ export const createBook = async (book: Omit<BookType, "id" | "addedIn" | "userId
   }
 }
 
-export const getBooks = async (): Promise<BookType[]> => {
+export const getBooks = async (status: number | undefined, sort?: string): Promise<BookType[]> => {
   try {
     const userId = auth.currentUser?.uid
+    const queryConstraints: QueryConstraint[] = []
 
-    const q = query(bookListCollection, where("userId", "==", userId))
-    const querySnapshot = await getDocs(q)
+    queryConstraints.push(where("userId", "==", userId))
 
-    const books = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    })) as BookType[]
+    if (status !== undefined) {
+      queryConstraints.push(where("status", "==", status))
+    }
 
-    return books
-  } catch (error) {
-    console.log(error)
-    throw error
-  }
-}
+    switch (sort) {
+      case "title":
+        queryConstraints.push(orderBy("title", "asc"))
+        break
+      case "author":
+        queryConstraints.push(orderBy("author", "asc"))
+        break
+      case "rating":
+        queryConstraints.push(orderBy("rating", "desc"))
+        break
+      case "addedLongTimeAgo":
+        queryConstraints.push(orderBy("addedIn", "asc"))
+        break
+      case "addedRecently":
+      default:
+        queryConstraints.push(orderBy("addedIn", "desc"))
+        break
+    }
 
-export const getBooksByStatus = async (status: number | undefined): Promise<BookType[]> => {
-  try {
-    const userId = auth.currentUser?.uid
-
-    const q = query(bookListCollection, where("status", "==", status), where("userId", "==", userId))
+    const q = query(bookListCollection, ...queryConstraints)
     const querySnapshot = await getDocs(q)
 
     const books = querySnapshot.docs.map((doc) => ({

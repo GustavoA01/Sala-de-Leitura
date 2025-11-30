@@ -4,7 +4,7 @@ import FilterButton from "@/components/ui/FilterButton"
 import { View } from "react-native"
 import { FilterSheetContent } from "../components/FilterSheetContent"
 import { styles } from "./styles"
-import { useRef, useState } from "react"
+import { useRef } from "react"
 import { sortItems } from "@/data/constants"
 
 type AddSortContainerProps = {

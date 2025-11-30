@@ -1,6 +1,5 @@
 import { View } from "react-native"
 import { styles } from "../Filters/container/styles"
-import { useState } from "react"
 import { StatusChip } from "../Filters/components/FilterChip"
 import { SearchController } from "@/components/SearchController"
 import { useForm } from "react-hook-form"
@@ -10,23 +9,21 @@ import { AddSortContainer } from "../Filters/container/AddSortContainer"
 import { useFilters } from "./hooks/UseFilters"
 
 export const HomeFilters = () => {
-  const [selectedSort, setSelectedSort] = useState<string>("")
-
   const { control } = useForm()
-
-  const { setSearchTerm, setSelectedFilter, selectedFilter } = useFilters();
+  const {
+    setSearchTerm,
+    setSelectedFilter,
+    selectedFilter,
+    selectedSort,
+    setSelectedSort,
+  } = useFilters()
 
   const handleFilter = (filter: number | undefined) => {
-    if(setSelectedFilter) setSelectedFilter(filter)
-  }
-
-  const handleSelectSort = (value: string) => {
-    setSelectedSort(value)
-    console.log(value)
+    setSelectedFilter(filter)
   }
 
   const handleSearch = (value: string) => {
-    if(setSearchTerm) setSearchTerm(value);
+    setSearchTerm(value)
   }
 
   return (
@@ -50,7 +47,7 @@ export const HomeFilters = () => {
       <AddSortContainer
         onPressAddButton={() => router.push("/book-form")}
         selectedSort={selectedSort}
-        onSelectSort={handleSelectSort}
+        onSelectSort={setSelectedSort}
       />
     </View>
   )

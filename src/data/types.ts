@@ -28,11 +28,22 @@ export type GoogleBooksContextType = {
   isLoadingGoogleBooks: boolean
 }
 
+export type FiltersContextType = {
+  searchTerm: string
+  setSearchTerm: (value: string) => void
+  selectedFilter: number | undefined
+  setSelectedFilter: (value: number | undefined) => void
+  books: BookType[]
+  isLoading: boolean
+  selectedSort: string
+  setSelectedSort: (value: string) => void
+}
+
 export interface GoogleBook {
   id: string;
   selfLink: string;
   volumeInfo: VolumeInfo;
-  saleInfo?: SaleInfo;    
+  saleInfo?: SaleInfo;
 }
 
 export interface VolumeInfo {
@@ -43,7 +54,7 @@ export interface VolumeInfo {
   publishedDate?: string;
   description?: string;
   pageCount?: number;
-  categories?: string[]; 
+  categories?: string[];
   averageRating?: number;
   ratingsCount?: number;
   language?: string;
@@ -59,5 +70,5 @@ export interface SaleInfo {
   country: string;
   saleability: "FOR_SALE" | "NOT_FOR_SALE" | "FREE";
   isEbook: boolean;
-  buyLink?: string; 
+  buyLink?: string;
 }
