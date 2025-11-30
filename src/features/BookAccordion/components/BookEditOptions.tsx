@@ -45,6 +45,8 @@ export const BookEditOptions = ({
       color: theme.colors.error,
       onPress: onRemoveFromList,
     })
+
+    options.splice(3)
   }
 
   return (

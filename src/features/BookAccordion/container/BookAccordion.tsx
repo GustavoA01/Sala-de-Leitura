@@ -59,15 +59,14 @@ export const BookAccordion = ({
         />
       </List.Accordion>
 
-      <CustomBottomSheet
-        height={isListPathName ? 350 : 300}
-        bottomSheetRef={bottomSheetRef}
-      >
+      <CustomBottomSheet height={300} bottomSheetRef={bottomSheetRef}>
         <BookEditOptions
           bookTitle={title}
           onEdit={() => handleEdit(id)}
           onAddToList={handleAddToList}
-          onRemoveFromList={isListPathName ? () => handleRemoveFromList(id) : undefined}
+          onRemoveFromList={
+            isListPathName ? () => handleRemoveFromList(id) : undefined
+          }
           onDelete={onDelete}
         />
       </CustomBottomSheet>
@@ -81,7 +80,7 @@ export const BookAccordion = ({
       </Portal>
 
       <CustomBottomSheet height={350} bottomSheetRef={listBottomSheet}>
-        <AddToListSheet bookId={id}/>
+        <AddToListSheet bookId={id} />
       </CustomBottomSheet>
     </View>
   )

@@ -9,15 +9,13 @@ import { useQuery } from "@tanstack/react-query"
 import { getListById } from "@/services/lists"
 import { useRef } from "react"
 import { CustomBottomSheet } from "@/components/ui/CustomBottomSheet"
-import { AddBookSheet } from "@/features/details/container/AddBookSheet"
+import { AddBookSheet } from "@/features/lists/container/AddBookSheet"
 import { getListBooks } from "@/services/lists/getListBooks"
 
 const ListDetailsScreen = () => {
   const { id } = useLocalSearchParams()
   const editListBottomSheetRef = useRef<any>(null)
-
   const onOpenBottomSheet = () => editListBottomSheetRef.current?.open()
-  const onCloseBottomSheet = () => editListBottomSheetRef.current?.close()
 
   const { data: list, isLoading } = useQuery({
     queryKey: ["list", id],
@@ -25,11 +23,11 @@ const ListDetailsScreen = () => {
     enabled: !!id,
   })
 
-  const { data: books, isLoading: isLoadingBooks } = useQuery({
+  const { data: listBooks, isLoading: isLoadingListBooks } = useQuery({
     queryKey: ["list-books", id],
     queryFn: () => getListBooks(id as string),
     enabled: !!id,
-  })
+  })  
 
   if (isLoading) {
     return (
@@ -57,9 +55,10 @@ const ListDetailsScreen = () => {
         style={{ alignSelf: "flex-end", marginBottom: 16 }}
       />
 
-      {isLoadingBooks && <ActivityIndicator style={{ marginTop: 16 }} />}
-      {books && books.length > 0 ? (
-        <ListAccordion data={books ?? []} />
+      {isLoadingListBooks && <ActivityIndicator style={{ marginTop: 16 }} />}
+      
+      {listBooks && listBooks.length > 0 ? (
+        <ListAccordion data={listBooks ?? []} />
       ) : (
         <Text style={{ textAlign: "center", marginTop: 16 }}>
           Nenhum livro adicionado
@@ -67,7 +66,7 @@ const ListDetailsScreen = () => {
       )}
 
       <CustomBottomSheet height={500} bottomSheetRef={editListBottomSheetRef}>
-        <AddBookSheet  />
+        <AddBookSheet listId={id as string} />
       </CustomBottomSheet>
     </SafeAreaWrapper>
   )
