@@ -22,7 +22,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="main"
         options={{
           title: "Início",
           tabBarIcon: ({ color, size, focused }) => (

@@ -22,7 +22,8 @@ export const Header = () => {
 
   const doLogout = async () => {
     try {
-      await signOut(auth)
+      await signOut(auth);
+      router.replace("/");
     } catch (error) {
       console.log(error)
     }

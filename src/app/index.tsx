@@ -9,7 +9,7 @@ import { Text } from "react-native-paper"
 const LoginScreen = () => {
   // useEffect(() => {
   //   setTimeout(() => {
-  //     router.push('/(tabs)')
+  //     router.push('/(tabs)/main')
   //   }, 2000)
   // }, [])
 
