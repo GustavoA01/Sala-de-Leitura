@@ -23,7 +23,7 @@ export const useSignUp = () => {
         await updateProfile(userCredential.user, {
           displayName: data.userName
         })
-        router.replace("/(tabs)")
+        router.replace("/(tabs)/main")
       }
     } catch (error) {
       console.log(error)

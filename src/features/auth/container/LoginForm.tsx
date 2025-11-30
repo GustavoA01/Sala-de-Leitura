@@ -18,7 +18,7 @@ export const LoginForm = () => {
   const onSubmit = async (data: LoginFormType) => {
     try{
       await signInWithEmailAndPassword(auth, data.email, data.password)
-      router.replace("/(tabs)")
+      router.replace("/(tabs)/main")
     }catch(error){
       console.log(error)
     }
