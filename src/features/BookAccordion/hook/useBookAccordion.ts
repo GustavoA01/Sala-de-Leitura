@@ -8,7 +8,7 @@ import { useLists } from "@/features/lists/hook/useLists"
 
 export const useBookAccordion = () => {
   const queryClient = useQueryClient()
-  const {lists, updateListFn} = useLists()
+  const { lists, updateListFn } = useLists()
   const bottomSheetRef = useRef<any>(null)
   const listBottomSheet = useRef<any>(null)
   const onOpenBottomSheet = () => bottomSheetRef.current?.open()
@@ -33,7 +33,7 @@ export const useBookAccordion = () => {
     router.push({
       pathname: "/book-form",
       params: {
-        id, 
+        id,
         source: "firebase",
       }
     })
@@ -51,7 +51,13 @@ export const useBookAccordion = () => {
 
   const handelDeleteBook = (id: string) => {
     hideModal()
-    deleteBookFn(id)
+    deleteBookFn(id).then(() => {
+      if (isListPathName) {
+        handleRemoveFromList(id)
+        queryClient.invalidateQueries({ queryKey: ["lists"] })
+        queryClient.invalidateQueries({ queryKey: ["list-books"] })
+      }
+    })
   }
 
   const handleRemoveFromList = (id: string) => {

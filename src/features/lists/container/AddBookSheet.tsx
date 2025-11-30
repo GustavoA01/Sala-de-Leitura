@@ -12,7 +12,7 @@ export const AddBookSheet = ({ listId }: { listId: string }) => {
 
   const { data: books, isLoading } = useQuery({
     queryKey: ["books"],
-    queryFn: getBooks,
+    queryFn: () => getBooks(undefined, "addedRecently"),
   })
 
   const handleAddToList = (listIdtoAdd: string, bookId: string) => {

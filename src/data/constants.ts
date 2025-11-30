@@ -1,5 +1,4 @@
 import { theme } from "@/theme"
-import { BookType } from "./types"
 
 export const filtersLabel = [
   {

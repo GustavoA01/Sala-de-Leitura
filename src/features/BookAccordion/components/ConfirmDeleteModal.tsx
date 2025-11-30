@@ -21,7 +21,8 @@ export const ConfirmDeleteModal = ({
       contentContainerStyle={styles.modalContainer}
     >
       <Text style={{ textAlign: "center" }}>
-        Deseja realmente deletar este livro?
+        Deseja realmente deletar este livro? 
+        Ele também será excluído de qualquer lista que esteja presente.
       </Text>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Button textColor={theme.colors.onSurface} onPress={hideModal}>

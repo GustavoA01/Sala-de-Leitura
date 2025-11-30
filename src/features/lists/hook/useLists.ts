@@ -124,7 +124,7 @@ export const useLists = () => {
     }
   }
 
-  const { mutateAsync: deleteListFn, isPending: isDeletingListLoading } = useMutation({
+  const { mutateAsync: deleteListFn } = useMutation({
     mutationFn: deleteList,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["lists"] })

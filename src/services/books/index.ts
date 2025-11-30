@@ -15,6 +15,7 @@ import {
   writeBatch } from "firebase/firestore"
 import { auth, db } from "../firebaseConfig"
 import { BookType } from "@/data/types"
+import { listCollection } from "../lists"
 
 const bookListName = "book-list"
 export const bookListCollection = collection(db, bookListName)
@@ -100,7 +101,7 @@ export const deleteBook = async (id: string) => {
   try {
     await deleteDoc(doc(bookListCollection, id))
 
-    const listsQuery = query(collection(db, "listas"), where("bookIds", "array-contains", id));
+    const listsQuery = query(listCollection, where("bookIds", "array-contains", id));
     const listasSnapshot = await getDocs(listsQuery);
 
     const batch = writeBatch(db);

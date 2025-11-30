@@ -59,7 +59,10 @@ export const BookAccordion = ({
         />
       </List.Accordion>
 
-      <CustomBottomSheet height={300} bottomSheetRef={bottomSheetRef}>
+      <CustomBottomSheet
+        height={isListPathName ? 350 : 300}
+        bottomSheetRef={bottomSheetRef}
+      >
         <BookEditOptions
           bookTitle={title}
           onEdit={() => handleEdit(id)}

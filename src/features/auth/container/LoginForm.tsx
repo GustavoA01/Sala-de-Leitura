@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { auth } from "@/services/firebaseConfig"
 import { signInWithEmailAndPassword } from "firebase/auth"
 import { router } from "expo-router"
+import { Alert } from "react-native"
 
 export const LoginForm = () => {
   const [secureTextEntry, setSecureTextEntry] = useState(true)
@@ -20,6 +21,7 @@ export const LoginForm = () => {
       await signInWithEmailAndPassword(auth, data.email, data.password)
       router.replace("/(tabs)")
     }catch(error){
+      Alert.alert("Erro ao fazer login", "Verifique suas credenciais e tente novamente")
       console.log(error)
     }
   }
