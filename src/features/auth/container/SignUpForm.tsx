@@ -2,7 +2,7 @@ import { FormProvider } from "react-hook-form"
 import { InputController } from "@/components/InputController"
 import { EmailPasswInputs } from "../components/EmailPasswInputs"
 import { AuthFooter } from "../components/AuthFooter"
-import { SignUpFormType, signUpSchema } from "@/data/schemas"
+import { SignUpFormType } from "@/data/schemas"
 import { HelperText } from "react-native-paper"
 import { useSignUp } from "@/hooks/useSignUp"
 

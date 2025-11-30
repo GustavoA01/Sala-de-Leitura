@@ -44,4 +44,12 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
   },
+
+  modalContainer: {
+    backgroundColor: theme.colors.surface,
+    padding: 20,
+    marginHorizontal: 16,
+    borderRadius: 12,
+    gap: 24,
+  },
 })

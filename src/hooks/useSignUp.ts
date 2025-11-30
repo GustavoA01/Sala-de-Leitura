@@ -5,6 +5,7 @@ import { SignUpFormType, signUpSchema } from "@/data/schemas"
 import { auth } from "@/services/firebaseConfig"
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth"
 import { router } from "expo-router"
+import { Alert } from "react-native"
 
 export const useSignUp = () => {
   const methods = useForm<SignUpFormType>({
@@ -26,6 +27,7 @@ export const useSignUp = () => {
         router.replace("/(tabs)/main")
       }
     } catch (error) {
+      Alert.alert("Erro ao cadastrar usuário", "Verifique os dados e tente novamente")
       console.log(error)
     }
   }
