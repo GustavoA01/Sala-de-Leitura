@@ -35,6 +35,25 @@ export const getBooks = async (): Promise<BookType[]> => {
   }
 }
 
+export const getBooksByStatus = async (status: number | undefined): Promise<BookType[]> => {
+  try {
+    const userId = auth.currentUser?.uid
+
+    const q = query(bookListCollection, where("status", "==", status), where("userId", "==", userId))
+    const querySnapshot = await getDocs(q)
+
+    const books = querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    })) as BookType[]
+
+    return books
+  } catch (error) {
+    console.log(error)
+    throw error
+  }
+}
+
 export const getBookById = async (id: string): Promise<BookType> => {
   try {
     const docRef = doc(bookListCollection, id)
