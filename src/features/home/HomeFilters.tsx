@@ -7,18 +7,17 @@ import { useForm } from "react-hook-form"
 import { router } from "expo-router"
 import { filtersLabel } from "@/data/constants"
 import { AddSortContainer } from "../Filters/container/AddSortContainer"
+import { useFilters } from "./hooks/UseFilters"
 
 export const HomeFilters = () => {
-  const [selectedFilter, setSelectedFilter] = useState<number | undefined>(
-    undefined
-  )
   const [selectedSort, setSelectedSort] = useState<string>("")
 
   const { control } = useForm()
 
+  const { setSearchTerm, setSelectedFilter, selectedFilter } = useFilters();
+
   const handleFilter = (filter: number | undefined) => {
-    setSelectedFilter(filter)
-    console.log(filter)
+    if(setSelectedFilter) setSelectedFilter(filter)
   }
 
   const handleSelectSort = (value: string) => {
@@ -27,7 +26,7 @@ export const HomeFilters = () => {
   }
 
   const handleSearch = (value: string) => {
-    console.log(value)
+    if(setSearchTerm) setSearchTerm(value);
   }
 
   return (
